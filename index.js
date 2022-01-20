@@ -1,3 +1,9 @@
+/** Projeto de API - integração
+*
+*Neste projeto preciso conectar em dois bancos e transferir dados de um para o outro.
+*Alé disso, preciso conferir os dados que serão inseridos no banco 2.
+*/
+
 const express = require('express');
 const app = express();
 
@@ -24,12 +30,10 @@ connection.connect(function(err) {
     if (err) return console.log(err);
     console.log('conectou1!');
     getRows(connection);
-    //insert(connection);
 })
 connection2.connect(function(err) {
     if (err) return console.log(err);
     console.log('conectou1!');
-    //getRows(connection);
     insert(connection);
 })
 let resultados = [];
@@ -42,33 +46,19 @@ function getRows(conn) {
     const sql = "select  * from tbl_textos";
     conn.query(sql, function(error, results, fields) {
         if (error) return console.log(error);
-        //resultados = results;
         console.log(results.length);
         count = results.length;
         results1 = results;
-        //console.log(results1)
         results.map((arr) => {
-            //console.log(arr.length)
-            //return arr;
             resultados = arr;
             console.log(resultados.titulo + "resultados1")
-                //console.log(arr[index])
-                //module.exports = resultados;
-                //console.log(resultados)
-                //res.send(resultados)
         });
         console.log(results.length)
-            //console.log(results);
         for (let i = 0; i < results.length; i++) {
             console.log(results[i].id + " :resultados")
         }
-        conn.end(); //fecha a conexão
+        conn.end(); 
     });
-
-
-
-    //console.log(resultados.length + "numero de itens")
-
 }
 
 function insert(conn) {
@@ -99,32 +89,12 @@ function insert(conn) {
 
 
 
-
-
-//const connection = require('mysql2/typings/mysql/lib/Connection');
-
-// async function connect() {
-//     console.log("conected")
-//     if (global.connection && global.connection.state !== 'disconected')
-
-//         return global.connection;
-
-//     const connection = await mysql.createConnection("mysql://root:root@localhost:3306/agenci16_garden")
-//     console.log("conectou com o mysql!")
-//     global.connection = connection
-//     return connection
-// }
-
 function tabela() {
 
 }
 
 app.get('/', (req, res) => {
     res.send('Hello World!' + JSON.stringify(resultados[72]));
-    //res.send('Hello World!' + JSON.stringify(results));
-
-
-
 })
 
 
